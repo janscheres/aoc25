@@ -24,7 +24,7 @@ func main() {
 		freshArr[k] = [2]int{before, after}
 	}
 
-	for _, j := range strings.Split(parts[1], "\n") {
+	for j := range strings.SplitSeq(parts[1], "\n") {
 		intj, _ := strconv.Atoi(j)
 		
 		for _, r := range freshArr {
