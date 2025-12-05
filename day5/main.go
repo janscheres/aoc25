@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -34,7 +35,36 @@ func main() {
 		}
 	}
 
-	fmt.Println(sum)
+	fmt.Println("Part 1:", sum)
+
+	freshSum := 0
+	sort.Slice(freshArr, func(i, j int) bool {//sort by start
+    	return freshArr[i][0] < freshArr[j][0]
+	})
+	var noOverlap [][2]int
+	currentStart := freshArr[0][0]
+	currentEnd := freshArr[0][1]
+
+	for _, r := range freshArr[1:] {
+		start := r[0]
+		end := r[1]
+
+		if start <= currentEnd+1 {
+			if end > currentEnd {
+				currentEnd = end
+			}
+		} else {
+			noOverlap = append(noOverlap, [2]int{currentStart, currentEnd})
+			currentStart=start
+			currentEnd=end
+		}
+	}
+	noOverlap=append(noOverlap, [2]int{currentStart,currentEnd})
+
+	for _, r := range noOverlap {
+		freshSum+= r[1]-r[0]+1
+	}
+	fmt.Println(freshSum)
 }
 
 const input = ``
